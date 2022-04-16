@@ -10,7 +10,10 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
-    <Folder Include="Tests\" />
+    <AvaloniaXaml Remove="Tests\**" />
+    <Compile Remove="Tests\**" />
+    <EmbeddedResource Remove="Tests\**" />
+    <None Remove="Tests\**" />
     <None Remove=".gitignore" />
   </ItemGroup>
   <ItemGroup>
@@ -30,5 +33,13 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.12" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.12" />
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DockSystemForLDE\src\Dock.Avalonia\Dock.Avalonia.csproj" />
+    <ProjectReference Include="..\DockSystemForLDE\src\Dock.Model.Avalonia\Dock.Model.Avalonia.csproj" />
+    <ProjectReference Include="..\DockSystemForLDE\src\Dock.Model.ReactiveUI\Dock.Model.ReactiveUI.csproj" />
+    <ProjectReference Include="..\DockSystemForLDE\src\Dock.Model\Dock.Model.csproj" />
+    <ProjectReference Include="..\DockSystemForLDE\src\Dock.ProportionalStackPanel\Dock.ProportionalStackPanel.csproj" />
+    <ProjectReference Include="..\DockSystemForLDE\src\Dock.Serializer\Dock.Serializer.csproj" />
   </ItemGroup>
 </Project>
