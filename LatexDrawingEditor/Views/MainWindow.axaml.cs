@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
-
+using Avalonia.Markup.Xaml;
+using Dock.Avalonia;
 
 namespace LatexDrawingEditor.Views
 {
@@ -9,10 +10,13 @@ namespace LatexDrawingEditor.Views
         public MainWindow()
         {
             InitializeComponent();
-
-            #if DEBUG
+            
+#if DEBUG
             this.AttachDevTools(); // F12 while debug
-            #endif
+#endif
+
+            DockProperties.SetIsDragEnabled(this, true);
+            DockProperties.SetIsDropEnabled(this, true);
         }
     }
 }
