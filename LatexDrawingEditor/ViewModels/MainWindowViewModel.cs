@@ -6,6 +6,5 @@ namespace LatexDrawingEditor.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase 
     {
-
     }
 }
