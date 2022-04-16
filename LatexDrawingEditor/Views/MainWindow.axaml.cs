@@ -1,4 +1,6 @@
+using Avalonia;
 using Avalonia.Controls;
+
 
 namespace LatexDrawingEditor.Views
 {
@@ -7,6 +9,10 @@ namespace LatexDrawingEditor.Views
         public MainWindow()
         {
             InitializeComponent();
+
+            #if DEBUG
+            this.AttachDevTools(); // F12 while debug
+            #endif
         }
     }
 }
