@@ -10,7 +10,11 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
+    <Folder Include="Tests\" />
     <None Remove=".gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LatexDrawingEditor.Test.csproj" />
   </ItemGroup>
   <ItemGroup>
     <!--This helps with theme dll-s trimming.

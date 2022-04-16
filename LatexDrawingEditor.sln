@@ -5,7 +5,10 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LatexDrawingEditor", "LatexDrawingEditor\LatexDrawingEditor.csproj", "{31242639-B9E3-4AFD-BAE7-FAE72E107723}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatexDrawingEditor.Test", "LatexDrawingEditor.Test\LatexDrawingEditor.Test.csproj", "{F2A1AAB9-66C3-4477-81BF-42C2AF025E87}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{350250EA-3042-4DF6-B024-1A6779EE3F88}"
+	ProjectSection(SolutionItems) = preProject
+		LatexDrawingEditor.Test\LatexDrawingEditor.Test.csproj = LatexDrawingEditor.Test\LatexDrawingEditor.Test.csproj
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +20,6 @@ Global
 		{31242639-B9E3-4AFD-BAE7-FAE72E107723}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31242639-B9E3-4AFD-BAE7-FAE72E107723}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31242639-B9E3-4AFD-BAE7-FAE72E107723}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F2A1AAB9-66C3-4477-81BF-42C2AF025E87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F2A1AAB9-66C3-4477-81BF-42C2AF025E87}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F2A1AAB9-66C3-4477-81BF-42C2AF025E87}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F2A1AAB9-66C3-4477-81BF-42C2AF025E87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
