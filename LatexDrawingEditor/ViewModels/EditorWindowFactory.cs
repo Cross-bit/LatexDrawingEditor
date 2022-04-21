@@ -9,6 +9,8 @@ using Dock.Model.Controls;
 using Dock.Model.Core;
 using Dock.Model.ReactiveUI;
 using Dock.Model.ReactiveUI.Controls;
+using LatexDrawingEditor.ViewModels.Documents;
+
 
 namespace LatexDrawingEditor.ViewModels
 {
@@ -20,6 +22,9 @@ namespace LatexDrawingEditor.ViewModels
         public override IRootDock CreateLayout()
         {
 
+            var canvasViewModel = new CanvasViewModel();
+
+
             // the main root dock 
             var rootDock = CreateRootDock();
 
@@ -27,7 +32,6 @@ namespace LatexDrawingEditor.ViewModels
 
             var windowLayout = CreateRootDock();
             windowLayout.Title = "Default";
-
 
 
             rootDock.IsCollapsable = true;
