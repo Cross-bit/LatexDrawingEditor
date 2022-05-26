@@ -1,6 +1,6 @@
 # LatexDrawingEditor
 
-Original repository with graph editor only:<br>
+Original repository with (winforms) graph editor only:<br>
 https://github.com/Cross-bit/SimpleGraphEditor
 
 Personal dev notes in OneNote(read only):<br>
