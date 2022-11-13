@@ -6,9 +6,6 @@
              x:Class="LatexDrawingEditor.Views.ToolStrip">
 	<!-- This represents top basic toolstrip -->
 
-	<Menu>
-		<MenuItem>
-		</MenuItem>
-	</Menu>
+
 
 </UserControl>

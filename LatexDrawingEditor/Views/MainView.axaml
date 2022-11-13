@@ -8,12 +8,46 @@
              x:Class="LatexDrawingEditor.Views.MainView">
 	
   <!-- Application main view, where all controls are placed -->
-	<Design.DataContext>
+	<!--<Design.DataContext>
 		<vm:MainWindowViewModel />
 	</Design.DataContext>
+
 	
 	<Grid RowDefinitions="Auto,*" Background="Transparent" DragDrop.AllowDrop="True">
 		<views:ToolStrip Grid.Row="0" />
 		<DockControl Layout="{Binding Layout}" Margin="4" Grid.Row="1" />
+	</Grid> -->
+	
+	<!-- UI sketch -->
+	<Grid RowDefinitions="Auto, *">
+
+		<!-- Title bar -->
+		<Grid Grid.Row="0" Background="Orange" Height="40" ColumnDefinitions="*, Auto">
+			<StackPanel Orientation="Horizontal" VerticalAlignment="Center"  
+						HorizontalAlignment="Center"
+						Grid.Column="0" >
+						<Label
+						FontSize="14"
+						Content="LDE"
+						FontWeight="Black" > LDE </Label>
+				
+			</StackPanel>
+			<Rectangle Grid.Column="1" Fill="Blue" Width="40"></Rectangle>
+		</Grid>
+		
+		<!-- Main area -->
+		<Grid Grid.Row="1" Background="Yellow" ColumnDefinitions="*, 40" >
+			<!-- Tools bar -->
+			<StackPanel Grid.Column="0" Background="Azure">
+			</StackPanel>
+			<StackPanel Grid.Column="1" Background="Gray">
+			</StackPanel>
+		</Grid>
+		
+		<!-- Main area -->
+		<Grid ColumnDefinitions="100,*">
+		</Grid>
+
 	</Grid>
+	
 </UserControl>

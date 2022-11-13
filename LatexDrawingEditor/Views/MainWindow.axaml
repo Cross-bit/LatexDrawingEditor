@@ -17,17 +17,7 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<Panel Margin="{Binding #MainWindow.OffScreenMargin}">
-		<Panel Height="30" HorizontalAlignment="Left" VerticalAlignment="Top">
-			<Label Content="LDE"
-				   Margin="4,0,4,0"
-				   FontSize="14"
-				   FontWeight="Normal"
-				   VerticalAlignment="Center"
-				   VerticalContentAlignment="Center" />
-		</Panel>
-		<Panel Margin="{Binding #MainWindow.WindowDecorationMargin}">
-			<views:MainView />
-		</Panel>
-	</Panel>
+
+	<views:MainView />
+			
 </Window>
