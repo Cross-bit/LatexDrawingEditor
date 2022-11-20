@@ -52,4 +52,9 @@
   <ItemGroup>
     <Resource Include="Assets\Toolbar\place-node-icon-tiny.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Styles\Themes\DarkTheme.axaml.cs">
+      <DependentUpon>DarkTheme.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

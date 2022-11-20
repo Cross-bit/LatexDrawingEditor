@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using LatexDrawingEditor.ViewModels;
 using LatexDrawingEditor.Views;
+using LatexDrawingEditor.Styles.Themes;
 
 namespace LatexDrawingEditor
 {
@@ -11,6 +12,7 @@ namespace LatexDrawingEditor
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+            LoadTheme();
         }
 
         public override void OnFrameworkInitializationCompleted()
@@ -24,6 +26,11 @@ namespace LatexDrawingEditor
             }
 
             base.OnFrameworkInitializationCompleted();
+        }
+
+        private void LoadTheme()
+        {
+            Styles.Add(new LightTheme());
         }
     }
 }

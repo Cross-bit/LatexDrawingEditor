@@ -7,30 +7,27 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="LatexDrawingEditor.Views.MainView">
 
+	<!-- Styles 
 	<UserControl.Styles>
 		<StyleInclude Source="/Styles/Main.axaml" />
-	</UserControl.Styles>
+	</UserControl.Styles> -->
 
 	<!-- UI sketch -->
 	<Grid RowDefinitions="Auto, *">
 
-		<!-- Title bar -->
-		<Grid Grid.Row="0" Background="#515151" Height="30" ColumnDefinitions="*, Auto">
+		<!-- Tools strip -->
+		<Grid Classes="ToolsStrip" Grid.Row="0" Background="{DynamicResource OrangeColor}" Height="30" ColumnDefinitions="*, Auto">
 			<StackPanel Orientation="Horizontal" VerticalAlignment="Center"  
 						HorizontalAlignment="Center"
 						Grid.Column="0" >
-						<Label
-						FontSize="14"
-						Content="LDE"
-						Foreground="White"
-						FontWeight="Medium"
-						/>
+						<!-- <Label FontSize="14" Content="LDE" FontWeight="Medium" /> -->
 			</StackPanel>
 		</Grid>
 		
 		<Grid Grid.Row="1" ColumnDefinitions="*, 45" >			
 			<!-- Canvas area -->	
 			<StackPanel Grid.Column="0" Background="Azure">
+				<Label> hra hra</Label>
 			</StackPanel>
 			<!-- Toolbar -->
 			<StackPanel Classes="Toolbar" Grid.Column="1">

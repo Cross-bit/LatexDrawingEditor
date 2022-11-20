@@ -1,0 +1,26 @@
+<Style xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		x:Class="LatexDrawingEditor.Styles.Themes.LightTheme">
+
+	<Style.Resources>
+		<Color x:Key="OrangeColor">#3aad3a</Color>
+		<Color x:Key="BrightOrangeColor">#ce701e</Color>
+		<Color x:Key="DarkOrangeColor">#b46219</Color>
+		<Color x:Key="WhiteColor">#ffffff</Color>
+		<Color x:Key="BlackColor">#000000</Color>
+		<Color x:Key="MenuBackgroundColor">#1b1a17</Color>
+		<Color x:Key="MainBackgroundColor">#272521</Color>
+		<Color x:Key="AlternativeMainBackgroundColor">#2a2824</Color>
+		<Color x:Key="OperationButtonBackgroundColor">#3c2b4e</Color>
+		<Color x:Key="OperationButtonHoverBackgroundColor">#45325a</Color>
+		<Color x:Key="OperationButtonPressedBackgroundColor">#342544</Color>
+		<Color x:Key="SuccessColor">#bcffbc</Color>
+		<Color x:Key="OperationErrorColor">#ffbcbc</Color>
+		<Color x:Key="SuccessBackgroundColor">#35a335</Color>
+		<Color x:Key="SuccessHoverBackgroundColor">#3aad3a</Color>
+		<Color x:Key="SuccessPressedBackgroundColor">#2f972f</Color>
+		<Color x:Key="SettingsTabBorderColor">#181614</Color>
+		<Color x:Key="ErrorColor">#a34235</Color>
+		<Color x:Key="PopupBackgroundColor">#1f1e1a</Color>
+	</Style.Resources>
+</Style>
