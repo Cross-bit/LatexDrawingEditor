@@ -7,17 +7,17 @@
 		xmlns:views="using:LatexDrawingEditor.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 		FontFamily="Segoe UI, SF Pro Display, Noto Sans, Cantarel"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="LatexDrawingEditor" Height="600" Width="900"
-		WindowState="Normal" WindowStartupLocation="CenterScreen"
-		ExtendClientAreaToDecorationsHint="True"
-        ExtendClientAreaChromeHints="PreferSystemChrome">
+        Icon="/Assets/app-logo.png"
+        Title="LatexDrawingEditor" Height="600" Width="1200"
+		WindowState="Normal" WindowStartupLocation="CenterScreen" >
 	
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+	<!--ExtendClientAreaToDecorationsHint="True" removed
+        ExtendClientAreaChromeHints="PreferSystemChrome"-->
 
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
 
 	<views:MainView />
-			
+	
 </Window>

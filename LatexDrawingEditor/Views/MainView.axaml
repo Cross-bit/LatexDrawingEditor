@@ -7,48 +7,61 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="LatexDrawingEditor.Views.MainView">
 	
-	
-  <!-- Application main view, where all controls are placed -->
-	<!--<Design.DataContext>
-		<vm:MainWindowViewModel />
-	</Design.DataContext>
-
-	
-	<Grid RowDefinitions="Auto,*" Background="Transparent" DragDrop.AllowDrop="True">
-		<views:ToolStrip Grid.Row="0" />
-		<DockControl Layout="{Binding Layout}" Margin="4" Grid.Row="1" />
-	</Grid> -->
-	
 	<!-- UI sketch -->
 	<Grid RowDefinitions="Auto, *">
 
 		<!-- Title bar -->
-		<Grid Grid.Row="0" Background="Orange" Height="40" ColumnDefinitions="*, Auto">
+		<Grid Grid.Row="0" Background="#515151" Height="30" ColumnDefinitions="*, Auto">
 			<StackPanel Orientation="Horizontal" VerticalAlignment="Center"  
 						HorizontalAlignment="Center"
 						Grid.Column="0" >
 						<Label
 						FontSize="14"
 						Content="LDE"
-						FontWeight="Black" > LDE </Label>
-				
+						Foreground="White"
+						FontWeight="Medium"
+						/> <!-- todo: -->
 			</StackPanel>
-			<Rectangle Grid.Column="1" Fill="Blue" Width="40"></Rectangle>
 		</Grid>
-		
 		<!-- Main area -->
-		<Grid Grid.Row="1" Background="Yellow" ColumnDefinitions="*, 40" >
+		<Grid Grid.Row="1" Background="Yellow" ColumnDefinitions="*, 45" >
 			<!-- Tools bar -->
 			<StackPanel Grid.Column="0" Background="Azure">
 			</StackPanel>
 			<StackPanel Grid.Column="1" Background="Gray">
+				<StackPanel.Styles>
+					<Style Selector="Button">
+						<Setter Property="Margin" Value="5"/>
+						
+					</Style>
+				</StackPanel.Styles>
+
+				<Button>
+					<Image Source="/Assets/Toolbar/move-icon-tiny.png"/>
+				</Button>
+				<Button>
+					<Image Source="/Assets/Toolbar/place-node-icon-tiny.png"/>
+				</Button>
+				<Button>
+					<Image Source="/Assets/Toolbar/add-edge-directed-icon.png"/>
+				</Button>
+				<Button>
+					<Image Source="/Assets/Toolbar/delete-icon-tiny.png"/>
+				</Button>
+				<Button>
+					<Image Source="/Assets/Toolbar/edit-value-icon-tiny.png"/>
+				</Button>
+				<Button>
+					<Image Source="/Assets/Toolbar/undo-operation.png"/>
+				</Button>
+				<Button>
+					<Image Source="/Assets/Toolbar/redo-operation.png"/>
+				</Button>
 			</StackPanel>
 		</Grid>
 		
 		<!-- Main area -->
 		<Grid ColumnDefinitions="100,*">
 		</Grid>
-
 	</Grid>
-	
 </UserControl>
