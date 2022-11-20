@@ -6,7 +6,11 @@
 			 xmlns:vm="using:LatexDrawingEditor.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="LatexDrawingEditor.Views.MainView">
-	
+
+	<UserControl.Styles>
+		<StyleInclude Source="/Styles/Main.axaml" />
+	</UserControl.Styles>
+
 	<!-- UI sketch -->
 	<Grid RowDefinitions="Auto, *">
 
@@ -20,41 +24,35 @@
 						Content="LDE"
 						Foreground="White"
 						FontWeight="Medium"
-						/> <!-- todo: -->
+						/>
 			</StackPanel>
 		</Grid>
-		<!-- Main area -->
-		<Grid Grid.Row="1" Background="Yellow" ColumnDefinitions="*, 45" >
-			<!-- Tools bar -->
+		
+		<Grid Grid.Row="1" ColumnDefinitions="*, 45" >			
+			<!-- Canvas area -->	
 			<StackPanel Grid.Column="0" Background="Azure">
 			</StackPanel>
-			<StackPanel Grid.Column="1" Background="Gray">
-				<StackPanel.Styles>
-					<Style Selector="Button">
-						<Setter Property="Margin" Value="5"/>
-						
-					</Style>
-				</StackPanel.Styles>
-
-				<Button>
+			<!-- Toolbar -->
+			<StackPanel Classes="Toolbar" Grid.Column="1">
+				<Button Classes="Toolbar__btn">
 					<Image Source="/Assets/Toolbar/move-icon-tiny.png"/>
 				</Button>
-				<Button>
+				<Button Classes="Toolbar__btn">
 					<Image Source="/Assets/Toolbar/place-node-icon-tiny.png"/>
 				</Button>
-				<Button>
+				<Button Classes="Toolbar__btn">
 					<Image Source="/Assets/Toolbar/add-edge-directed-icon.png"/>
 				</Button>
-				<Button>
+				<Button Classes="Toolbar__btn">
 					<Image Source="/Assets/Toolbar/delete-icon-tiny.png"/>
 				</Button>
-				<Button>
+				<Button Classes="Toolbar__btn">
 					<Image Source="/Assets/Toolbar/edit-value-icon-tiny.png"/>
 				</Button>
-				<Button>
+				<Button Classes="Toolbar__btn">
 					<Image Source="/Assets/Toolbar/undo-operation.png"/>
 				</Button>
-				<Button>
+				<Button Classes="Toolbar__btn">
 					<Image Source="/Assets/Toolbar/redo-operation.png"/>
 				</Button>
 			</StackPanel>

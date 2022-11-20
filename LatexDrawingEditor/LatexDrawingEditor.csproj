@@ -16,6 +16,12 @@
     <None Remove="Tests\**" />
     <None Remove=".gitignore" />
     <None Remove="Assets\Toolbar\place-node-icon-tiny.png" />
+    <None Remove="Styles\Main.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Styles\Main.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <None Include="LatexDrawingEditor.Test.csproj" />

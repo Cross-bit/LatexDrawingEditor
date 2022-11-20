@@ -9,7 +9,7 @@
 		FontFamily="Segoe UI, SF Pro Display, Noto Sans, Cantarel"
         Icon="/Assets/app-logo.png"
         Title="LatexDrawingEditor" Height="600" Width="1200"
-		WindowState="Normal" WindowStartupLocation="CenterScreen" >
+		WindowState="Normal" WindowStartupLocation="CenterScreen" >	
 	
 	<!--ExtendClientAreaToDecorationsHint="True" removed
         ExtendClientAreaChromeHints="PreferSystemChrome"-->
