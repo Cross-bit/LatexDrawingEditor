@@ -3,12 +3,11 @@
 		x:Class="LatexDrawingEditor.Styles.Themes.DarkTheme">
 	
 		<Style.Resources>
-			<Color x:Key="OrangeColor">#c46a1c</Color>
-			<Color x:Key="BrightOrangeColor">#ce701e</Color>
-			<Color x:Key="DarkOrangeColor">#b46219</Color>
+			<Color x:Key="GreyColor">#333333</Color>
+			<Color x:Key="GreyColorDark">#282828</Color>
 			<Color x:Key="WhiteColor">#ffffff</Color>
 			<Color x:Key="BlackColor">#000000</Color>
-			<Color x:Key="MenuBackgroundColor">#1b1a17</Color>
+			<Color x:Key="MenuBackgroundColor">#1B1A17</Color>
 			<Color x:Key="MainBackgroundColor">#272521</Color>
 			<Color x:Key="AlternativeMainBackgroundColor">#2a2824</Color>
 			<Color x:Key="OperationButtonBackgroundColor">#3c2b4e</Color>
@@ -22,5 +21,10 @@
 			<Color x:Key="SettingsTabBorderColor">#181614</Color>
 			<Color x:Key="ErrorColor">#a34235</Color>
 			<Color x:Key="PopupBackgroundColor">#1f1e1a</Color>
+
+			<SolidColorBrush x:Key="ThemePrimaryBackgroundBrush" Color="{DynamicResource GreyColor}" />
+			<SolidColorBrush x:Key="ThemeSecondaryBackgroundBrush" Color="{DynamicResource GreyColorDark}" />
+			<SolidColorBrush x:Key="ThemeForegroundBrush" Color="{DynamicResource WhiteColor}" />
+							 
 		</Style.Resources>
 </Style>

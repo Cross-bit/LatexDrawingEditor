@@ -7,49 +7,66 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="LatexDrawingEditor.Views.MainView">
 
-	<!-- Styles 
+	
 	<UserControl.Styles>
 		<StyleInclude Source="/Styles/Main.axaml" />
-	</UserControl.Styles> -->
+	</UserControl.Styles> 
 
 	<!-- UI sketch -->
 	<Grid RowDefinitions="Auto, *">
 
 		<!-- Tools strip -->
-		<Grid Classes="ToolsStrip" Grid.Row="0" Background="{DynamicResource OrangeColor}" Height="30" ColumnDefinitions="*, Auto">
-			<StackPanel Orientation="Horizontal" VerticalAlignment="Center"  
-						HorizontalAlignment="Center"
-						Grid.Column="0" >
-						<!-- <Label FontSize="14" Content="LDE" FontWeight="Medium" /> -->
-			</StackPanel>
+		<Grid Grid.Row="0" Height="30" ColumnDefinitions="*, Auto">
+			<Menu Classes="Toolbar" DockPanel.Dock="Top">
+				<MenuItem Header="File">
+					<MenuItem Header="New" />
+					<MenuItem Header="Open" />
+					<Separator/>	
+					<MenuItem Header="Export">
+						<MenuItem Header="Edge list"/>
+						<MenuItem Header="Adjency list"/>
+						<MenuItem Header="Screenshot"/>
+					</MenuItem>
+					<Separator/>
+					<MenuItem Header="Exit(Alt + F4)"/>
+				</MenuItem>
+				<MenuItem Header="Edit">
+					<MenuItem Header="Undo"/>
+					<MenuItem Header="Redo"/>
+					<MenuItem Header="Copy"/>
+					<MenuItem Header="Paste"/>
+				</MenuItem>
+			</Menu>
 		</Grid>
-		
-		<Grid Grid.Row="1" ColumnDefinitions="*, 45" >			
-			<!-- Canvas area -->	
+
+		<Grid Grid.Row="1" ColumnDefinitions="*, 50" >
+
+			<!-- Canvas area -->
 			<StackPanel Grid.Column="0" Background="Azure">
-				<Label> hra hra</Label>
+				<Label> tada tada</Label>
 			</StackPanel>
+
 			<!-- Toolbar -->
-			<StackPanel Classes="Toolbar" Grid.Column="1">
-				<Button Classes="Toolbar__btn">
+			<StackPanel Classes="ToolMenu" Grid.Column="1">
+				<Button Classes="ToolMenu__btn">
 					<Image Source="/Assets/Toolbar/move-icon-tiny.png"/>
 				</Button>
-				<Button Classes="Toolbar__btn">
+				<Button Classes="ToolMenu__btn">
 					<Image Source="/Assets/Toolbar/place-node-icon-tiny.png"/>
 				</Button>
-				<Button Classes="Toolbar__btn">
+				<Button Classes="ToolMenu__btn">
 					<Image Source="/Assets/Toolbar/add-edge-directed-icon.png"/>
 				</Button>
-				<Button Classes="Toolbar__btn">
+				<Button Classes="ToolMenu__btn">
 					<Image Source="/Assets/Toolbar/delete-icon-tiny.png"/>
 				</Button>
-				<Button Classes="Toolbar__btn">
+				<Button Classes="ToolMenu__btn">
 					<Image Source="/Assets/Toolbar/edit-value-icon-tiny.png"/>
 				</Button>
-				<Button Classes="Toolbar__btn">
+				<Button Classes="ToolMenu__btn">
 					<Image Source="/Assets/Toolbar/undo-operation.png"/>
 				</Button>
-				<Button Classes="Toolbar__btn">
+				<Button Classes="ToolMenu__btn">
 					<Image Source="/Assets/Toolbar/redo-operation.png"/>
 				</Button>
 			</StackPanel>

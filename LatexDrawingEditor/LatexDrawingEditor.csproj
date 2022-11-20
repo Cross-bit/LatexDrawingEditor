@@ -56,5 +56,8 @@
     <Compile Update="Styles\Themes\DarkTheme.axaml.cs">
       <DependentUpon>DarkTheme.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Styles\Themes\LightTheme.axaml.cs">
+      <DependentUpon>LightTheme.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
