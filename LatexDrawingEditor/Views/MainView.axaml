@@ -42,9 +42,9 @@
 		<Grid Grid.Row="1" ColumnDefinitions="*, 50" >
 
 			<!-- Canvas area -->
-			<StackPanel Grid.Column="0" Background="Azure">
-				<Label> tada tada</Label>
-			</StackPanel>
+			
+			<views:RenderingTestView  Grid.Column="0"/>
+			
 
 			<!-- Toolbar -->
 			<StackPanel Classes="ToolMenu" Grid.Column="1">
