@@ -42,8 +42,10 @@
 		<Grid Grid.Row="1" ColumnDefinitions="*, 50" >
 
 			<!-- Canvas area -->
+			<DockPanel Background="Azure" >
+				<views:RenderingTestView Grid.Column="0"  />
+			</DockPanel>
 			
-			<views:RenderingTestView  Grid.Column="0"/>
 			
 
 			<!-- Toolbar -->

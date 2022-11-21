@@ -8,94 +8,133 @@ using Avalonia.Platform;
 using Avalonia.Rendering.SceneGraph;
 using Avalonia.Skia;
 using Avalonia.Threading;
+using System.Collections.Generic;
 using SkiaSharp;
 
 namespace LatexDrawingEditor.Views
 {
-    public class RenderingTestView : UserControl
+    public partial class RenderingTestView : UserControl
     {
+        static float mouseX = 0; // todo change to double
+        static float mouseY = 0;
+        static bool mouseHeld = false;
+
         public RenderingTestView() {
+
             ClipToBounds = true;
+
+            this.PointerMoved += (sender, args) =>
+            {
+                var point = args.GetCurrentPoint(this);
+                mouseX = (float)point.Position.X;
+                mouseY = (float)point.Position.Y;
+                if (mouseHeld)
+                {
+                    fOffsetX -= (mouseX - fStartPanX);
+                    fOffsetY -= (mouseY - fStartPanY);
+
+                    fStartPanX = mouseX;
+                    fStartPanY = mouseY;
+                }
+            };
+
+            this.PointerPressed += (sender, args) =>
+            {
+                var point = args.GetCurrentPoint(this);
+                if (point.Properties.IsLeftButtonPressed) {
+                    fStartPanX = (float)point.Position.X;
+                    fStartPanY = (float)point.Position.Y;
+                    mouseHeld = true;
+                }
+            };
+
+            this.PointerReleased += (sender, args) =>
+            {
+                var point = args.GetCurrentPoint(this);
+                if (point.Properties.PointerUpdateKind == Avalonia.Input.PointerUpdateKind.LeftButtonReleased)
+                {
+                    mouseHeld = false;
+                }
+            };
+
+
+            InitializeComponent();
+        }
+
+        static float fOffsetX = 0;
+        static float fOffsetY = 0;
+
+        static float fStartPanX = 0;
+        static float fStartPanY = 0;
+
+
+        static (int x, int y) WorldToScreen(float fworldX, float fworldY) {
+            return ((int)(fworldX - fOffsetX), (int)(fworldY - fOffsetY));
+        }
+
+        static (float x, float y) ScreenToWorld(float fscreenX, float fscreenY) {
+            return ((fscreenX + fOffsetX), (fscreenY + fOffsetY));
         }
 
         class CustomDrawOp : ICustomDrawOperation
         {
-            private readonly FormattedText _noSkiaText;
-            public CustomDrawOp(Rect bounds, FormattedText noSkia)
-            {
-                _noSkiaText = noSkia;
-                Bounds = bounds;
-            }
-
             public void Dispose() { /*No-op*/ }
 
             public Rect Bounds { get; }
+
+            public CustomDrawOp(Rect bounds) {
+                Bounds = bounds;
+            }
             public bool HitTest(Point p) => false;
             public bool Equals(ICustomDrawOperation other) => false;
 
-            static Stopwatch St = Stopwatch.StartNew();
 
-            public async void Render(IDrawingContextImpl context)
+            public List<(int x, int y)> verts = new List<(int x, int y)>() { (50, 40), (10, 10), (80, 0)};
+
+            private void NoSkiaFallback(IDrawingContextImpl context) {
+                Dispatcher.UIThread.Post(() => {
+                    using (var tmpCtx = new DrawingContext(context, false))
+                    {
+                        var noSkia = new FormattedText("Current rendering API is not Skia", Typeface.Default, 20, TextAlignment.Center,
+                        TextWrapping.Wrap, new Size(Bounds.Width, 200));
+                        // todo: fix explodes on window resize, maybe remove completely
+                        tmpCtx.DrawText(new SolidColorBrush(Colors.Red), new Point(100, 10), noSkia);
+                    }
+                });
+            }
+
+            public void Render(IDrawingContextImpl context)
             {
                 SKCanvas? canvas = (context as ISkiaDrawingContextImpl)?.SkCanvas;
 
                 if (canvas == null)
-                {
-
-                    Dispatcher.UIThread.Post(() => {
-                        using (var tmpCtx = new DrawingContext(context, false))
-                        {
-                            FormattedText noSkia = _noSkiaText;
-                            var col = new SolidColorBrush(Colors.Red);
-                            var pos = new Point(100, 10);
-                            tmpCtx.DrawText(col, pos, noSkia);
-                        }
-                    });
-
-                }
+                    NoSkiaFallback(context);
                 else
                 {
                     canvas.Save();
-                    // create the first shader
-                    var colors = new SKColor[] {
-                        new SKColor(0, 255, 255),
-                        new SKColor(255, 0, 255),
-                        new SKColor(255, 255, 0),
-                        new SKColor(0, 255, 255)
-                    };
-
-                    var lightPosition = new SKPoint(
-                        (float)(Bounds.Width / 2 + Math.Cos(St.Elapsed.TotalSeconds) * Bounds.Width / 4),
-                        (float)(Bounds.Height / 2 + Math.Sin(St.Elapsed.TotalSeconds) * Bounds.Height / 4));
-
-                    //  using (var sweep = SKShader.CreateSweepGradient(new SKPoint((int)Bounds.Width / 2, (int)Bounds.Height / 2), colors, null))
 
                     using (var shader = SKShader.CreatePerlinNoiseFractalNoise(0.05f, 0.05f, 4, 0))
-                    //using (var shader = SKShader.CreateCompose(sweep, turbulence, SKBlendMode.SrcATop))
-
-
                     using (var paint = new SKPaint { Shader = shader })
 
-                        canvas.DrawPaint(paint);
+                    canvas.DrawPaint(paint);
 
-                    using (var pseudoLight = SKShader.CreateRadialGradient(
-                        lightPosition,
-                        (float)(Bounds.Width / 4),
-                        new[] {
-                            new SKColor(255, 200, 200, 100),
-                            new SKColor(40,40,40, 250)
-                        },
-                        SKShaderTileMode.Clamp))
-                    using (var paint = new SKPaint
-                    {
-                        Shader = pseudoLight
-                    })
-                        canvas.DrawPaint(paint);
+                    var vertPaint = new SKPaint();
+                    vertPaint.StrokeWidth = 5;
+                    vertPaint.IsAntialias = true;
 
-                    RenderTest(canvas);
+                    foreach (var vert in verts) {
+                        vertPaint.Color = new (255, 0, 0);
+
+                        (int X, int Y) screenPos = WorldToScreen(vert.x, vert.y);
+
+
+                        canvas.DrawCircle((screenPos.X) + (float)Bounds.Width/2, (screenPos.Y) + (float)Bounds.Height / 2, 20, vertPaint);
+                    }
+
                     canvas.Restore();
                 }
             }
+
             static Random rand = new Random();
             static int width = 400;
             static int height = 500;
@@ -122,19 +161,13 @@ namespace LatexDrawingEditor.Views
 
                     surface.DrawLine(x1, y1, x2, y2, paint);
                 }
-
             }
         }
 
 
         public override void Render(DrawingContext context)
         {
-
-            var noSkia = new FormattedText("Current rendering API is not Skia", Typeface.Default, 20, TextAlignment.Center,
-            TextWrapping.Wrap, new Size(Bounds.Width, 200));
-
-            context.Custom(new CustomDrawOp(new Rect(0, 0, Bounds.Width, Bounds.Height), noSkia));
-
+            context.Custom(new CustomDrawOp(new Rect(0, 0, Bounds.Width, Bounds.Height)));
             Dispatcher.UIThread.InvokeAsync(InvalidateVisual, DispatcherPriority.Background);
         }
 
