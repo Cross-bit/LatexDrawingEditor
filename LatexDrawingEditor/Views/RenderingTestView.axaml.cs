@@ -132,11 +132,12 @@ namespace LatexDrawingEditor.Views
                     }
 
                     canvas.Restore();
+                    RenderTest(canvas);
                 }
             }
 
             static Random rand = new Random();
-            static int width = 400;
+            static int width = 1000;
             static int height = 500;
             private void RenderTest(SKCanvas surface)
             {
@@ -159,7 +160,10 @@ namespace LatexDrawingEditor.Views
                         alpha: alpha
                     );
 
-                    surface.DrawLine(x1, y1, x2, y2, paint);
+                    (int X1, int Y1) = WorldToScreen(x1, y1);
+                    (int X2, int Y2) = WorldToScreen(x2, y2);
+
+                    surface.DrawLine(X1, Y1, X2, Y2, paint);
                 }
             }
         }
