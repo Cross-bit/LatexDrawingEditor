@@ -15,9 +15,27 @@ namespace LatexDrawingEditor.Views
 {
     public partial class RenderingTestView : UserControl
     {
-        static double mouseX = 0;
-        static double mouseY = 0;
-        static bool mouseHeld = false;
+
+        #region Mouse movement handling 
+        // todo: probably move somewhere else?
+        double _mouseX = 0;
+        double _mouseY = 0;
+        bool _isMouseHeld = false;
+
+        double MouseX => _mouseX; 
+        double MouseY => _mouseY;
+        bool IsMouseHeld => _isMouseHeld;
+
+        #endregion
+
+        #region Panning offsets
+
+        double _offsetX = 0;
+        double _offsetY = 0;
+        double _startPanX = 0;
+        double _startPanY = 0;
+
+        #endregion
 
         public RenderingTestView() {
 
@@ -26,67 +44,62 @@ namespace LatexDrawingEditor.Views
             this.PointerMoved += (sender, args) =>
             {
                 var point = args.GetCurrentPoint(this);
-                mouseX = point.Position.X;
-                mouseY = point.Position.Y;
-                if (mouseHeld) {
-                    fOffsetX -= (mouseX - fStartPanX);// move only of offset set by mouseX/mouseY
-                    fOffsetY -= (mouseY - fStartPanY);
+                _mouseX = point.Position.X;
+                _mouseY = point.Position.Y;
+                if (_isMouseHeld) {
+                    _offsetX -= (_mouseX - _startPanX);// move only of new offset set by mouseX/mouseY
+                    _offsetY -= (_mouseY - _startPanY);
 
-                    fStartPanX = mouseX; // reset initial mouse offset each frame
-                    fStartPanY = mouseY;
+                    _startPanX = _mouseX; // reset initial mouse offset each frame
+                    _startPanY = _mouseY;
                 }
             };
 
-            this.PointerPressed += (sender, args) =>
-            {
+            this.PointerPressed += (sender, args) => {
                 var point = args.GetCurrentPoint(this);
                 if (point.Properties.IsLeftButtonPressed) {
-                    fStartPanX = point.Position.X;
-                    fStartPanY = point.Position.Y;
-                    mouseHeld = true;
+                    _startPanX = point.Position.X;
+                    _startPanY = point.Position.Y;
+                    _isMouseHeld = true;
                 }
             };
 
             this.PointerReleased += (sender, args) =>
             {
                 var point = args.GetCurrentPoint(this);
-                if (point.Properties.PointerUpdateKind == Avalonia.Input.PointerUpdateKind.LeftButtonReleased)
-                {
-                    mouseHeld = false;
+                if (point.Properties.PointerUpdateKind == Avalonia.Input.PointerUpdateKind.LeftButtonReleased) {
+                    _isMouseHeld = false;
                 }
             };
-
 
             InitializeComponent();
         }
 
-        static double fOffsetX = 0;
-        static double fOffsetY = 0;
-
-        static double fStartPanX = 0;
-        static double fStartPanY = 0;
-
-
-        static (int x, int y) WorldToScreen(float fworldX, float fworldY) {
-            return ((int)(fworldX - fOffsetX), (int)(fworldY - fOffsetY));
+        public (int x, int y) WorldToScreen(float fworldX, float fworldY) {
+            return ((int)(fworldX - _offsetX), (int)(fworldY - _offsetY));
         }
 
-        static (double x, double y) ScreenToWorld(int fscreenX, int fscreenY) {
-            return ((fscreenX + fOffsetX), (fscreenY + fOffsetY));
+        public (double x, double y) ScreenToWorld(int fscreenX, int fscreenY) {
+            return ((fscreenX + _offsetX), (fscreenY + _offsetY));
         }
 
         class CustomDrawOp : ICustomDrawOperation
         {
+            #region Other
             public void Dispose() { /*No-op*/ }
 
             public Rect Bounds { get; }
 
-            public CustomDrawOp(Rect bounds) {
+            private RenderingTestView _renderView;
+
+            public CustomDrawOp(Rect bounds, RenderingTestView renderView) {
                 Bounds = bounds;
+                _renderView = renderView;
             }
+
             public bool HitTest(Point p) => false;
             public bool Equals(ICustomDrawOperation other) => false;
-
+            #endregion
 
             public List<(int x, int y)> verts = new List<(int x, int y)>() { (50, 40), (10, 10), (80, 0)};
 
@@ -102,8 +115,8 @@ namespace LatexDrawingEditor.Views
                 });
             }
 
-            public void Render(IDrawingContextImpl context)
-            {
+            public void Render(IDrawingContextImpl context) {
+
                 SKCanvas? canvas = (context as ISkiaDrawingContextImpl)?.SkCanvas;
 
                 if (canvas == null)
@@ -124,8 +137,7 @@ namespace LatexDrawingEditor.Views
                     foreach (var vert in verts) {
                         vertPaint.Color = new (255, 0, 0);
 
-                        (int X, int Y) screenPos = WorldToScreen(vert.x, vert.y);
-
+                        (int X, int Y) screenPos = _renderView.WorldToScreen(vert.x, vert.y);
 
                         canvas.DrawCircle((screenPos.X) + (float)Bounds.Width/2, (screenPos.Y) + (float)Bounds.Height / 2, 20, vertPaint);
                     }
@@ -159,21 +171,19 @@ namespace LatexDrawingEditor.Views
                         alpha: alpha
                     );
 
-                    (int X1, int Y1) = WorldToScreen(x1, y1);
-                    (int X2, int Y2) = WorldToScreen(x2, y2);
+                    (int X1, int Y1) = _renderView.WorldToScreen(x1, y1);
+                    (int X2, int Y2) = _renderView.WorldToScreen(x2, y2);
 
                     surface.DrawLine(X1, Y1, X2, Y2, paint);
                 }
             }
         }
 
-
+        // Runs each frame
         public override void Render(DrawingContext context)
         {
-            context.Custom(new CustomDrawOp(new Rect(0, 0, Bounds.Width, Bounds.Height)));
+            context.Custom(new CustomDrawOp(new Rect(0, 0, Bounds.Width, Bounds.Height), this));
             Dispatcher.UIThread.InvokeAsync(InvalidateVisual, DispatcherPriority.Background);
         }
-
-
     }
 }
