@@ -15,8 +15,8 @@ namespace LatexDrawingEditor.Views
 {
     public partial class RenderingTestView : UserControl
     {
-        static float mouseX = 0; // todo change to double
-        static float mouseY = 0;
+        static double mouseX = 0;
+        static double mouseY = 0;
         static bool mouseHeld = false;
 
         public RenderingTestView() {
@@ -26,14 +26,13 @@ namespace LatexDrawingEditor.Views
             this.PointerMoved += (sender, args) =>
             {
                 var point = args.GetCurrentPoint(this);
-                mouseX = (float)point.Position.X;
-                mouseY = (float)point.Position.Y;
-                if (mouseHeld)
-                {
-                    fOffsetX -= (mouseX - fStartPanX);
+                mouseX = point.Position.X;
+                mouseY = point.Position.Y;
+                if (mouseHeld) {
+                    fOffsetX -= (mouseX - fStartPanX);// move only of offset set by mouseX/mouseY
                     fOffsetY -= (mouseY - fStartPanY);
 
-                    fStartPanX = mouseX;
+                    fStartPanX = mouseX; // reset initial mouse offset each frame
                     fStartPanY = mouseY;
                 }
             };
@@ -42,8 +41,8 @@ namespace LatexDrawingEditor.Views
             {
                 var point = args.GetCurrentPoint(this);
                 if (point.Properties.IsLeftButtonPressed) {
-                    fStartPanX = (float)point.Position.X;
-                    fStartPanY = (float)point.Position.Y;
+                    fStartPanX = point.Position.X;
+                    fStartPanY = point.Position.Y;
                     mouseHeld = true;
                 }
             };
@@ -61,18 +60,18 @@ namespace LatexDrawingEditor.Views
             InitializeComponent();
         }
 
-        static float fOffsetX = 0;
-        static float fOffsetY = 0;
+        static double fOffsetX = 0;
+        static double fOffsetY = 0;
 
-        static float fStartPanX = 0;
-        static float fStartPanY = 0;
+        static double fStartPanX = 0;
+        static double fStartPanY = 0;
 
 
         static (int x, int y) WorldToScreen(float fworldX, float fworldY) {
             return ((int)(fworldX - fOffsetX), (int)(fworldY - fOffsetY));
         }
 
-        static (float x, float y) ScreenToWorld(float fscreenX, float fscreenY) {
+        static (double x, double y) ScreenToWorld(int fscreenX, int fscreenY) {
             return ((fscreenX + fOffsetX), (fscreenY + fOffsetY));
         }
 
@@ -137,7 +136,7 @@ namespace LatexDrawingEditor.Views
             }
 
             static Random rand = new Random();
-            static int width = 1000;
+            static int width = 600;
             static int height = 500;
             private void RenderTest(SKCanvas surface)
             {
