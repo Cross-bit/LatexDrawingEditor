@@ -43,7 +43,7 @@
 
 			<!-- Canvas area -->
 			<DockPanel Background="Azure" >
-				<views:RenderingTestView Grid.Column="0"  />
+				<views:RenderingTestView Grid.Column="0"  Vertecies="{Binding VerteciesData}" />
 			</DockPanel>
 			
 			

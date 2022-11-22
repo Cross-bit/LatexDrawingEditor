@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,8 @@ namespace LatexDrawingEditor.ViewModels
             get => _layout;
             set => this.RaiseAndSetIfChanged(ref _layout, value);
         }
+
+        public List<(int x, int y)> VerteciesData => new List<(int x, int y)>() { (50, 40), (10, 10), (80, 0) };
 
         public MainWindowViewModel() {
             

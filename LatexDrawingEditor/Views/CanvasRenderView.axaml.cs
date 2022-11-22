@@ -16,28 +16,39 @@ namespace LatexDrawingEditor.Views
     public partial class RenderingTestView : UserControl
     {
 
-        #region Mouse movement handling 
-        // todo: probably move somewhere else?
-        double _mouseX = 0;
-        double _mouseY = 0;
-        bool _isMouseHeld = false;
+            #region Mouse movement handling 
+            // todo: probably move somewhere else?
+            double _mouseX = 0;
+            double _mouseY = 0;
+            bool _isMouseHeld = false;
 
-        double MouseX => _mouseX; 
-        double MouseY => _mouseY;
-        bool IsMouseHeld => _isMouseHeld;
+            double MouseX => _mouseX; 
+            double MouseY => _mouseY;
+            bool IsMouseHeld => _isMouseHeld;
+
+            #endregion
+
+            #region Panning offsets
+
+            double _offsetX = 0;
+            double _offsetY = 0;
+            double _startPanX = 0;
+            double _startPanY = 0;
 
         #endregion
+            
 
-        #region Panning offsets
+            // Avalonia property registration
+            public static readonly StyledProperty<List<(int x, int y)>> VerteciesProperty =
+            AvaloniaProperty.Register<RenderingTestView, List<(int x, int y)>>(nameof(Background), new List<(int x, int y)>());
 
-        double _offsetX = 0;
-        double _offsetY = 0;
-        double _startPanX = 0;
-        double _startPanY = 0;
+            public List<(int x, int y)> Vertecies { get => GetValue(VerteciesProperty); set => GetValue(VerteciesProperty); }
 
-        #endregion
+            public RenderingTestView() {
 
-        public RenderingTestView() {
+            var textBlock = new TextBlock();
+            var text = textBlock.GetObservable(TextBlock.TextProperty);
+            text.Subscribe(value => Console.WriteLine(value + " Changed"));
 
             ClipToBounds = true;
 
@@ -92,16 +103,18 @@ namespace LatexDrawingEditor.Views
 
             private RenderingTestView _renderView;
 
-            public CustomDrawOp(Rect bounds, RenderingTestView renderView) {
+            private List<(int x, int y)> _vertsToDraw = new List<(int x, int y)>();
+
+            public CustomDrawOp(Rect bounds, RenderingTestView renderView, List<(int x, int y)> vertsToDraw) {
                 Bounds = bounds;
                 _renderView = renderView;
+                _vertsToDraw = vertsToDraw;
             }
 
             public bool HitTest(Point p) => false;
             public bool Equals(ICustomDrawOperation other) => false;
             #endregion
 
-            public List<(int x, int y)> verts = new List<(int x, int y)>() { (50, 40), (10, 10), (80, 0)};
 
             private void NoSkiaFallback(IDrawingContextImpl context) {
                 Dispatcher.UIThread.Post(() => {
@@ -134,7 +147,7 @@ namespace LatexDrawingEditor.Views
                     vertPaint.StrokeWidth = 5;
                     vertPaint.IsAntialias = true;
 
-                    foreach (var vert in verts) {
+                    foreach (var vert in _vertsToDraw) {
                         vertPaint.Color = new (255, 0, 0);
 
                         (int X, int Y) screenPos = _renderView.WorldToScreen(vert.x, vert.y);
@@ -143,38 +156,6 @@ namespace LatexDrawingEditor.Views
                     }
 
                     canvas.Restore();
-                    RenderTest(canvas);
-                }
-            }
-
-            static Random rand = new Random();
-            static int width = 600;
-            static int height = 500;
-            private void RenderTest(SKCanvas surface)
-            {
-                byte alpha = 128;
-                var paint = new SKPaint();
-                paint.StrokeWidth = 5;
-                paint.IsAntialias = true;
-
-                for (int i = 0; i < 1_0000; i++)
-                {
-                    float x1 = (float)(rand.NextDouble() * width);
-                    float x2 = (float)(rand.NextDouble() * width);
-                    float y1 = (float)(rand.NextDouble() * height);
-                    float y2 = (float)(rand.NextDouble() * height);
-
-                    paint.Color = new SKColor(
-                        red: (byte)(rand.NextDouble() * 255),
-                        green: (byte)(rand.NextDouble() * 255),
-                        blue: (byte)(rand.NextDouble() * 255),
-                        alpha: alpha
-                    );
-
-                    (int X1, int Y1) = _renderView.WorldToScreen(x1, y1);
-                    (int X2, int Y2) = _renderView.WorldToScreen(x2, y2);
-
-                    surface.DrawLine(X1, Y1, X2, Y2, paint);
                 }
             }
         }
@@ -182,7 +163,7 @@ namespace LatexDrawingEditor.Views
         // Runs each frame
         public override void Render(DrawingContext context)
         {
-            context.Custom(new CustomDrawOp(new Rect(0, 0, Bounds.Width, Bounds.Height), this));
+            context.Custom(new CustomDrawOp(new Rect(0, 0, Bounds.Width, Bounds.Height), this, Vertecies));
             Dispatcher.UIThread.InvokeAsync(InvalidateVisual, DispatcherPriority.Background);
         }
     }

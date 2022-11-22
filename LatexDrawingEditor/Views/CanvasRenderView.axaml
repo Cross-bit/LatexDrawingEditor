@@ -6,6 +6,7 @@
              x:Class="LatexDrawingEditor.Views.RenderingTestView" >
 
 	<!-- Transparent panel filling entire screen for handling user interactions -->
-	<DockPanel Background="Transparent"></DockPanel>
+	<DockPanel Background="Transparent">		
+	</DockPanel>
 	
 </UserControl>
